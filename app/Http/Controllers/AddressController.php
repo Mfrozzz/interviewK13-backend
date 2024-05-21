@@ -26,9 +26,9 @@ class AddressController extends Controller
     {
       $validatedData = $request->validate([
         'id_contactFK' => 'required|exists:contacts,id',
-        'cep' => 'required|string|max:10',
+        'cep' => 'required|string|max:9',
         'street' => 'required|string|max:255',
-        'number' => 'required|string|max:10',
+        'number' => 'required|string|max:6',
         'neighborhood' => 'required|string|max:255',
         'city' => 'required|string|max:255',
         'state' => 'required|string|max:2',
@@ -47,15 +47,21 @@ class AddressController extends Controller
         return response()->json($address);
     }
 
-    public function update(UpdateAddressRequest $request, string $id)
+    public function update(Request $request, Address $address)
     {
-        if (!$address = Address::find($id)) {
-            return response()->json(['message' => 'Endereço não encontrado'], 404);
-        }
-        $validatedData = $request->validated();
+        $validatedData = $request->validate([
+            'id_contactFK' => 'required|exists:contacts,id',
+            'cep' => 'required|string|max:9',
+            'street' => 'required|string|max:255',
+            'number' => 'required|string|max:6',
+            'neighborhood' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:2',
+        ]);
+
         $address->update($validatedData);
 
-        return response()->json(['message' => 'Endereço atualizado com sucesso!', 'address' => $address]);
+        return response()->json(['message' => 'Endereço atualizado com sucesso'], 200);
     }
 
     public function destroy(string $id)
@@ -66,5 +72,16 @@ class AddressController extends Controller
         $address->delete();
 
         return response()->json(['message' => 'Endereço excluído com sucesso!']);
+    }
+
+    public function findByFK(Request $request, string $id)
+    {
+        $address = Address::where('id_contactFK', $id)->first();
+
+        if ($address) {
+                return response()->json($address);
+            } else {
+                return response()->json(['message' => 'Nenhum endereço encontrado para este ID de contato.'], 404);
+            }
     }
 }

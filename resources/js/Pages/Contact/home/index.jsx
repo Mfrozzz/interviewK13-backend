@@ -1,91 +1,92 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import moment from "moment";
 import { Head, Link } from "@inertiajs/react";
+import '../../../../css/contactStyle.css';
+import Header from '@/Components/Header';
 
-function ListContact(){
+function ListContact() {
   const [users, setUsers] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     axios
-        .get("/api/contact/index")
-        .then((response) => {
-          setUsers(response.data);
-        })
-        .catch((error) => {
-            console.error("Erro ao buscar contatos:", error);
-        });
-}, []);
+      .get("/api/contact/index")
+      .then((response) => {
+        setUsers(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar contatos:", error);
+      });
+  }, []);
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredUsers = users.filter((contact) =>
+    contact.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div>
-      <h2>Lista de Usuários</h2>
-      <button>
-        <Link href={'/view/contacts/create'}>Adicionar Contato</Link> 
-      </button> 
-      <table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            {/* <th>CPF</th>
-            <th>Email</th>
-            <th>Data de Nascimento</th> */}
-            <th>Detalhes</th>
-            <th>Editar</th>
-            <th>+ Endereço</th>
-            <th>+ Telefone</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((contact) => (
-            <tr key={contact.id}>
-              <td>{contact.name}</td>
-              {/* <td>{contact.cpf}</td>
-              <td>{contact.email}</td>
-              <td>{moment(contact.birthday).format('DD/MM/YYYY')}</td> */}
-              <td>
-                <button>
-                  <Link href={`/view/contacts/${contact.id}/details`}>Detalhes do Contato</Link> 
-                </button> 
-              </td>
-              <td>
-                <button>
-                  <Link href={`/view/contacts/${contact.id}/update`}>Editar o Contato</Link> 
-                </button> 
-              </td>
-              <td>
-                <button>
-                  <Link href={`/view/contacts/${contact.id}/address`}>Adicionar Endereço</Link> 
-                </button> 
-              </td>
-              <td>
-                <button>
-                  <Link href={`/view/contacts/phone`}>Adicionar Telefone</Link> 
-                </button> 
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Head title="Home Page" />
+      <Header />
+      <div className="container">
+        <div className="content">
+          <h2>Lista de Usuários</h2>
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Pesquisar contatos..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+          </div>
+          <button className="add-button">
+            <Link href={'/view/contacts/create'}>Adicionar Contato</Link>
+          </button>
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Detalhes</th>
+                <th>Editar</th>
+                <th>+ Endereço</th>
+                <th>+ Telefone</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredUsers.map((contact) => (
+                <tr key={contact.id}>
+                  <td>{contact.name}</td>
+                  <td>
+                    <button className="details-button">
+                      <Link href={`/view/contacts/${contact.id}/details`}>Detalhes do Contato</Link>
+                    </button>
+                  </td>
+                  <td>
+                    <button className="edit-button">
+                      <Link href={`/view/contacts/${contact.id}/update`}>Editar o Contato</Link>
+                    </button>
+                  </td>
+                  <td>
+                    <button className="address-button">
+                      <Link href={`/view/contacts/${contact.id}/address`}>Adicionar Endereço</Link>
+                    </button>
+                  </td>
+                  <td>
+                    <button className="phone-button">
+                      <Link href={`/view/contacts/${contact.id}/phone`}>Adicionar Telefone</Link>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
-  // return (
-  //   <div>
-  //     <h2>Lista de Usuários</h2>
-  //     <ul>
-  //       {users.map((user) => (
-  //         <li key={user.id}>
-  //           <strong>Nome:</strong> {user.name} <br />
-  //           <strong>CPF:</strong> {user.cpf} <br />
-  //           <strong>Email:</strong> {user.email} <br />
-  //           <strong>Data de Nascimento:</strong> {moment(user.birthday).format("DD/MM/YYYY")}
-  //           <a href={`/view/contacts/${user.id}/address`}>Adicionar Endereço</a>
-  //           <a href={`/view/contacts/${user.id}/phone`}>Adicionar Telefone</a>
-  //         </li>
-  //       ))}
-  //     </ul>
-  //   </div>
-  // );
 };
 
 export default ListContact;

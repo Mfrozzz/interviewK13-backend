@@ -1,0 +1,143 @@
+.container {
+    font-family: sans-serif;
+    padding: 20px;
+    padding-top: 68px;
+    background-color: #fff;
+    min-height: 100vh;
+  }
+  
+  .content {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  h2 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+  }
+  
+  .add-button,
+  .details-button,
+  .edit-button,
+  .address-button,
+  .phone-button,
+  .back-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .add-button, .back-button {
+    margin-top: 15px;
+    background-color: #2196F3; 
+  }
+  
+  .details-button {
+    background-color: #008CBA; 
+  }
+  
+  .edit-button {
+    background-color: #f44336; 
+  }
+  
+  .address-button {
+    background-color: #FFC107;
+  }
+  
+  .phone-button {
+    background-color: #9C27B0;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .submit-button {
+    background-color: #2196F3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .contact-details,
+  .address-details,
+  .phone-details {
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .delete-button,
+  .edit-address-button,
+  .edit-phone-button {
+    background-color: #2196F3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .delete-button {
+    background-color: #f44336;
+  }

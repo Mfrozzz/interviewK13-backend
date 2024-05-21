@@ -1,29 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../../../css/phoneStyle.css';
 import Header from '@/Components/Header';
 import { Head, Link } from "@inertiajs/react";
 
-function CreatePhone({ contact }) {
-  const [cellphone, setCellphone] = useState('');
-  const [residencialphone, setResidencialphone] = useState('');
-  const [commercialphone, setCommercialphone] = useState('');
+function UpdatePhone({ contact, phone }) {
+  const [error, setError] = useState('');
+
+  const [cellphone, setCellphone] = useState(phone.cellphone || '');
+  const [residencialphone, setResidencialphone] = useState(phone.residencialphone || '');
+  const [commercialphone, setCommercialphone] = useState(phone.commercialphone || '');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(`/api/phonenumber/store/${contact.id}`, {
+      const response = await axios.put(`/api/phonenumber/${phone.id}/update`, {
         id_contactFK: contact.id,
         cellphone,
         residencialphone,
         commercialphone,
       });
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         console.log('Dados enviados com sucesso!');
-        setCellphone('');
-        setResidencialphone('');
-        setCommercialphone('');
+        // Limpe os campos do formulário após o envio
+        // ... (se necessário)
       } else {
         console.error('Erro ao enviar dados.');
       }
@@ -34,14 +35,14 @@ function CreatePhone({ contact }) {
 
   return (
     <div>
-      <Head title="Adicionar Telefone" />
+      <Head title="Editar Telefone" />
       <Header />
       <div className="container">
         <div className="content">
           <button className='back-button'>
-            <Link href="/view/contacts/home">Voltar para Home</Link>
+            <Link href={`/view/contacts/${contact.id}/details`}>Voltar para Detalhes</Link>
           </button>
-          <h2>Criar Novo Telefone</h2>
+          <h2>Editar Telefones</h2>
           <form onSubmit={handleSubmit} className="form">
             <div className="form-group">
               <label htmlFor="id_contactFK">Contato:</label>
@@ -52,7 +53,7 @@ function CreatePhone({ contact }) {
               </select>
             </div>
             <div className="form-group">
-              <label htmlFor="cellphone">Telefone Celular:</label>
+              <label htmlFor="cellphone">Celular:</label>
               <input
                 type="text"
                 id="cellphone"
@@ -61,7 +62,7 @@ function CreatePhone({ contact }) {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="residencialphone">Telefone Residencial:</label>
+              <label htmlFor="residencialphone">Residencial:</label>
               <input
                 type="text"
                 id="residencialphone"
@@ -70,7 +71,7 @@ function CreatePhone({ contact }) {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="commercialphone">Telefone Comercial:</label>
+              <label htmlFor="commercialphone">Comercial:</label>
               <input
                 type="text"
                 id="commercialphone"
@@ -88,4 +89,4 @@ function CreatePhone({ contact }) {
   );
 }
 
-export default CreatePhone;
+export default UpdatePhone;

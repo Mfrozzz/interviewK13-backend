@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../../../css/addressStyle.css';
 import Header from '@/Components/Header';
 import { Head, Link } from "@inertiajs/react";
 
-function CreateAdress({ contact }) {
-  const [cep, setCep] = useState('');
-  const [street, setStreet] = useState('');
-  const [number, setNumber] = useState('');
-  const [neighborhood, setNeighborhood] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
+function EditAdress({ contact, address }) {
+  const [error, setError] = useState('');
+
+  const [cep, setCep] = useState(address.cep || '');
+  const [street, setStreet] = useState(address.street || '');
+  const [number, setNumber] = useState(address.number || '');
+  const [neighborhood, setNeighborhood] = useState(address.neighborhood || '');
+  const [city, setCity] = useState(address.city || '');
+  const [state, setState] = useState(address.state || '');
 
   const estados = [
     "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS",
@@ -21,7 +23,7 @@ function CreateAdress({ contact }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(`/api/address/store/${contact.id}`, {
+      const response = await axios.put(`/api/address/${address.id}/update`, {
         id_contactFK: contact.id,
         cep,
         street,
@@ -31,15 +33,9 @@ function CreateAdress({ contact }) {
         state,
       });
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         console.log('Dados enviados com sucesso!');
-        // Limpe os campos do formulário após o envio
-        setCep('');
-        setStreet('');
-        setNumber('');
-        setNeighborhood('');
-        setCity('');
-        setState('');
+
       } else {
         console.error('Erro ao enviar dados.');
       }
@@ -50,14 +46,14 @@ function CreateAdress({ contact }) {
 
   return (
     <div>
-      <Head title="Adicionar Endereço" />
+      <Head title="Editar Endereço" />
       <Header />
       <div className="container">
         <div className="content">
           <button className='back-button'>
-            <Link href="/view/contacts/home">Voltar para Home</Link>
+            <Link href={`/view/contacts/${contact.id}/details`}>Voltar para Detalhes</Link>
           </button>
-          <h2>Criar Novo Endereço</h2>
+          <h2>Editar Endereço</h2>
           <form onSubmit={handleSubmit} className="form">
             <div className="form-group">
               <label htmlFor="id_contactFK">Endereço do contato</label>
@@ -133,4 +129,4 @@ function CreateAdress({ contact }) {
   );
 }
 
-export default CreateAdress;
+export default EditAdress;
