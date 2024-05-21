@@ -21,6 +21,10 @@ function EditContact({ contact }) {
         cpf,
         email,
         birthday,
+      }).then(()=>{
+        alert("Usuário editado, volte para a Home Page.")
+      }).catch(()=>{
+        alert("Falha, campos preenchidos incorretamente.")
       });
 
       if (response.status === 200) {

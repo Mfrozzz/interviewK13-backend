@@ -19,6 +19,10 @@ function UpdatePhone({ contact, phone }) {
         cellphone,
         residencialphone,
         commercialphone,
+      }).then(()=>{
+        alert("Telefones Editados. Volte para a página de detalhes do contato.");
+      }).catch(()=>{
+        alert("Falha. Campos preenchidos incorretamente.");
       });
 
       if (response.status === 200) {

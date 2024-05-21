@@ -29,7 +29,11 @@ function CreateAdress({ contact }) {
         neighborhood,
         city,
         state,
-      });
+      }).then(()=>{
+        alert("Endereços Cadastrados. Volte para a Home Page");
+      }).catch(()=>{
+        alert("Falha. Campos preenchidos incorretamente.");
+      });;
 
       if (response.status === 201) {
         console.log('Dados enviados com sucesso!');

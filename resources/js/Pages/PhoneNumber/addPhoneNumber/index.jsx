@@ -17,6 +17,10 @@ function CreatePhone({ contact }) {
         cellphone,
         residencialphone,
         commercialphone,
+      }).then(()=>{
+        alert("Telefones Cadastrados. Volte para a Home Page.");
+      }).catch(()=>{
+        alert("Falha. Campos preenchidos incorretamente.");
       });
 
       if (response.status === 201) {

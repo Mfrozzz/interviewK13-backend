@@ -31,7 +31,11 @@ function EditAdress({ contact, address }) {
         neighborhood,
         city,
         state,
-      });
+      }).then(()=>{
+        alert("Endereços Editados. Volte para a página de detalhes do contato.");
+      }).catch(()=>{
+        alert("Falha. Campos preenchidos incorretamente.");
+      });;
 
       if (response.status === 200) {
         console.log('Dados enviados com sucesso!');

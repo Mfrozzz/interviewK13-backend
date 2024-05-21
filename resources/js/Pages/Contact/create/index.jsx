@@ -21,6 +21,8 @@ function CreateContact() {
         birthday,
       }).then(() => {
         alert("Usuário Cadastrado, volte para a Home Page.")
+      }).catch(()=>{
+        alert("Campos preenchidos incorretamente");
       });
 
       if (response.status === 201) {
