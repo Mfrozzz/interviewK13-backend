@@ -11,10 +11,28 @@ Tecnologias:
 
 - Esse é um projeto que se utiliza de Docker. Tendo por especifidade o uso da imagem de Docker recomendada no próprio site framework Laravel, o **Sail**, juntamente com o framework Front-end do NodeJs **React**.
 
+- Antes de seguir com a instalação. Crie na raiz do projeto o arquivo `.env`, copie o conteudo de `.env.example` e troque as seguintes linhas do arquivo.
+
+```
+    DB_CONNECTION=mysql
+    DB_HOST=mysql
+    DB_PORT=3306
+    DB_DATABASE=laravel
+    DB_USERNAME=sail
+    DB_PASSWORD=password
+```
+
+- Ou no seu terminal Linux execute:
+
+```
+    cp .env.example .env
+```
+
 - Para executar o projeto Inicie o Docker, no diretório correto do projeto abra o seu terminal e execute os comandos:
 
 ```
     ./vendor/bin/sail up -d
+    ./vendor/bin/sail npm i
     ./vendor/bin/sail npm run dev
 ```
 
